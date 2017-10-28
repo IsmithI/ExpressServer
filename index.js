@@ -3,16 +3,33 @@ var bodyParser = require('body-parser');
 var ejs = require('ejs');
 var mysql = require('mysql');
 
+var execsql = require('execsql'),
+    dbConfig = {
+    host: "n7qmaptgs6baip9z.chr7pe7iynqr.eu-west-1.rds.amazonaws.com",
+    user: "bavpvnf9xpf6gqa8",
+    password: "rmxopdsj29oki2ao"
+},
+    sql = 'use blogdb',
+    sqlFile = __dirname + 'db_init.sql'
+;
+
 var app = express();
+
+execsql.config(dbConfig)
+    .exec(sql)
+    .execFile(sqlFile, function (err, result) {
+        console.log(result);
+    })
+    .end();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
 
 var conn = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "24071998",
+    host: "n7qmaptgs6baip9z.chr7pe7iynqr.eu-west-1.rds.amazonaws.com",
+    user: "bavpvnf9xpf6gqa8",
+    password: "rmxopdsj29oki2ao",
     database: "blogdb"
 });
 
