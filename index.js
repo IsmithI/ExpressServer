@@ -9,14 +9,12 @@ var execsql = require('execsql'),
     user: "bavpvnf9xpf6gqa8",
     password: "rmxopdsj29oki2ao"
 },
-    sql = 'use blogdb',
     sqlFile = __dirname + 'db_init.sql'
 ;
 
 var app = express();
 
 execsql.config(dbConfig)
-    .exec(sql)
     .execFile(sqlFile, function (err, result) {
         console.log(result);
     })

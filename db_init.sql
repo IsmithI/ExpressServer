@@ -1,3 +1,7 @@
+ CREATE database if not exists blogdb;
+
+ use blogdb;
+
  CREATE TABLE IF NOT EXISTS `posts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(100) DEFAULT NULL,
