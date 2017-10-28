@@ -1,0 +1,25 @@
+#newPost {
+	padding: 0;
+	margin: 0;
+	position: fixed;
+	width: 64px;
+	height: 64px;
+
+	bottom: 16px;
+	right: 16px;
+
+	border-radius: 50%;
+
+	background-color: #101010;
+
+	line-height: 64px;
+	text-align: center;
+	vertical-align: middle;
+
+	font-size: 64px;
+	color: white;
+}
+
+#newPost:hover {
+	box-shadow: 0px 10px 5px  rgba(0,0,0,0.6);
+}
