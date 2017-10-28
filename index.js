@@ -3,32 +3,38 @@ var bodyParser = require('body-parser');
 var ejs = require('ejs');
 var mysql = require('mysql');
 
-var execsql = require('execsql'),
-    dbConfig = {
-    host: "n7qmaptgs6baip9z.chr7pe7iynqr.eu-west-1.rds.amazonaws.com",
-    user: "bavpvnf9xpf6gqa8",
-    password: "rmxopdsj29oki2ao"
-},
-    sqlFile = __dirname + 'db_init.sql'
-;
+var execsql = require('execsql');
+
+var sqlFile = __dirname + '/db_init.sql';
 
 var app = express();
-
-execsql.config(dbConfig)
-    .execFile(sqlFile, function (err, result) {
-        console.log(result);
-    })
-    .end();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
 
-var conn = mysql.createConnection({
-    host: "n7qmaptgs6baip9z.chr7pe7iynqr.eu-west-1.rds.amazonaws.com",
-    user: "bavpvnf9xpf6gqa8",
-    password: "rmxopdsj29oki2ao",
-    database: "blogdb"
+// var conn = mysql.createConnection("mysql://lkbohat1gojsj5xe:t27tstcp4hh2hbbj@p1us8ottbqwio8hv.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/b38cd4nhqad3nlw4");
+var conn = mysql.createConnection(process.env.JAWSDB_URL);
+
+conn.connect(function (err) {
+    if (err) throw err;
+    console.log("Connected to DB");
+    conn.query("CREATE database if not exists blogdb", function (err, result) {
+        if (err) throw err;
+        console.log("Database created");
+
+        conn.query(
+            " CREATE TABLE IF NOT EXISTS posts (\n" +
+            "  id int(11) NOT NULL AUTO_INCREMENT,\n" +
+            "  title varchar(100) DEFAULT NULL,\n" +
+            "  content text,\n" +
+            "  publish_date datetime DEFAULT NULL,\n" +
+            "  PRIMARY KEY (id)\n" +
+            ") ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8", function (err, result) {
+                if (err) throw err;
+                console.log(result);
+            });
+    });
 });
 
 // var posts = [
